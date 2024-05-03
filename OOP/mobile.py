@@ -17,8 +17,9 @@ class MobilePhone:
         self.notify('power_on')
 
     def power_off(self):
-        print(1)
-        pass
+        self.state = self.states['power_off'](self)
+
+        self.notify('power_off')
 
     def camera_on(self):
         # я решил что у камеры есть отдельная кнопка :)
@@ -84,8 +85,9 @@ class PowerOff:
         pass
 
 
-class PowerOn:
+class PowerOn(MobilePhone):
     def __init__(self, phone_status):
+        super().__init__()
         self.phone_status = phone_status
 
     def power_on(self):
@@ -113,7 +115,7 @@ class PowerOn:
             'sms': 'sms',
             'calendar': 'calendar'
         }
-        choice = menu.get('sms')  # тут должен быть инпут
+        choice = menu.get('calendar')  # тут должен быть инпут
         # это упрошенный выбор меню,
         # представим что мы тут как то урпаляем кнопками через input
         self.phone_status.state = self.phone_status.states[choice](self)
